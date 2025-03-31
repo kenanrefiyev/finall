@@ -21,7 +21,7 @@ const CategorySection = () => {
         }
     ]
   return (
-    <div className='container mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6'>
+    <div  id ="categ" className='container mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6'>
         {categories.map((category, index) =>
         (
             <div key={index} className='relative h-64 transform transition-transform duration-300 hover:scale-105 cursor-pointer'>

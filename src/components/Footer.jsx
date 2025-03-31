@@ -31,7 +31,7 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <h4 className="text-lg font-semibold mb-4">GET IN TOUCH</h4>
+          <h4  id="contact" className="text-lg font-semibold mb-4">GET IN TOUCH</h4>
           <ul className="space-y-2">
             <li>Call: (405) 555-0128</li>
             <li> <a href="mailto:hello@createx.com">Email: hello@createx.com</a></li>

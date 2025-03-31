@@ -55,7 +55,7 @@ const Blog = () => {
     <div className="bg-gray-50 min-h-screen">
       <div className="bg-white py-8">
         <div className="max-w-6xl mx-auto px-4">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Our Blog</h1>
+          <h1  id="blog" className="text-3xl font-bold text-gray-900 mb-2">Our Blog</h1>
           <p className="text-lg text-gray-600">
             Discover the latest trends, tips, and inspiration for your shopping journey
           </p>

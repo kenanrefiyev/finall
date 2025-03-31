@@ -18,7 +18,7 @@ const Register = ({openLogin}) => {
             </div>
         </form>
         <div className='text-center'>
-            <span className='text-gray-700'>Already have an account?</span>
+            <span className='text-gray-700'>Already have an account? <br></br></span>
             <button className='text-red-800' onClick={openLogin}>Login</button>
         </div>
     </div>
