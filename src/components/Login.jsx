@@ -51,9 +51,7 @@ const Login = ({ openSignUp }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Form is valid, proceed with login
       console.log('Login data:', formData);
-      // Here you would typically call your login API
     }
   };
 

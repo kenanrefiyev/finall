@@ -34,9 +34,9 @@ const Checkout = ({ setOrder }) => {
             <h3 className='text-3xl font-bold mb-8 text-gray-800'>Checkout</h3>
             
             <div className='flex flex-col lg:flex-row gap-8'>
-                {/* Left Column - Forms */}
+               
                 <div className='lg:w-2/3 space-y-6'>
-                    {/* Billing Information */}
+               
                     <div className='bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden'>
                         <div 
                             className='flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors'
@@ -92,7 +92,7 @@ const Checkout = ({ setOrder }) => {
                         </div>
                     </div>
                     
-                    {/* Shipping Information */}
+                    
                     <div className='bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden'>
                         <div 
                             className='flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors'
@@ -138,7 +138,7 @@ const Checkout = ({ setOrder }) => {
                         </div>
                     </div>
                     
-                    {/* Payment Method */}
+                 
                     <div className='bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden'>
                         <div 
                             className='flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors'
@@ -256,7 +256,7 @@ const Checkout = ({ setOrder }) => {
                     </div>
                 </div>
                 
-                {/* Right Column - Order Summary */}
+            
                 <div className='lg:w-1/3'>
                     <div className='bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-6'>
                         <h3 className='text-xl font-semibold text-gray-800 mb-6'>Order Summary</h3>

@@ -30,10 +30,10 @@ const Cart = () => {
           </div>
 
           <div className='flex flex-col lg:flex-row gap-8'>
-            {/* Cart Items */}
+            
             <div className='lg:w-2/3'>
               <div className='bg-white rounded-xl shadow-sm overflow-hidden'>
-                {/* Table Header */}
+             
                 <div className='hidden md:grid grid-cols-12 gap-4 bg-gray-50 p-4 border-b border-gray-200'>
                   <div className='col-span-5'>
                     <p className='text-sm font-medium text-gray-500 uppercase'>Product</p>
@@ -49,11 +49,10 @@ const Cart = () => {
                   </div>
                 </div>
 
-                {/* Cart Items */}
                 <div className='divide-y divide-gray-200'>
                   {cart.products.map((product) => (
                     <div key={product.id} className='grid grid-cols-1 md:grid-cols-12 gap-4 p-4 items-center'>
-                      {/* Product Info */}
+                    
                       <div className='col-span-5 flex items-center space-x-4'>
                         <img 
                           src={product.image} 
@@ -65,12 +64,11 @@ const Cart = () => {
                         </div>
                       </div>
 
-                      {/* Price */}
+                   
                       <div className='col-span-2 text-center'>
                         <p className='text-gray-700'>${product.price.toFixed(2)}</p>
                       </div>
 
-                      {/* Quantity */}
                       <div className='col-span-3 flex items-center justify-center'>
                         <div className='flex items-center border border-gray-300 rounded-md'>
                           <button 
@@ -89,7 +87,6 @@ const Cart = () => {
                         </div>
                       </div>
 
-                      {/* Subtotal & Remove */}
                       <div className='col-span-2 flex items-center justify-end space-x-4'>
                         <p className='text-gray-800 font-medium'>${(product.quantity * product.price).toFixed(2)}</p>
                         <button 
@@ -105,7 +102,7 @@ const Cart = () => {
               </div>
             </div>
 
-            {/* Order Summary */}
+       
             <div className='lg:w-1/3'>
               <div className='bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-6'>
                 <h3 className='text-lg font-semibold text-gray-900 mb-6'>Order Summary</h3>
@@ -160,7 +157,7 @@ const Cart = () => {
             </div>
           </div>
 
-          {/* Address Change Modal */}
+        
           <Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen}>
             <ChangeAddress setAddress={setAddress} setIsModelOpen={setIsModelOpen} />
           </Modal>

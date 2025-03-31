@@ -116,7 +116,7 @@ const CreatexHomepage = () => {
       </nav>
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800"  
+          <h1 className="text-2xl font-bold text-gray-800 cursor-pointer" onClick={() => navigate('/')}  
              >CREATEX</h1>
           <nav className="flex flex-wrap justify-center md:justify-start space-x-6 mt-2 md:mt-0">
             <a href="#" className="text-gray-700 hover:text-gray-900"
