@@ -1,96 +1,183 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import EmptyCart from '../assets/images/emptycart.png';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaTrashAlt, FaChevronLeft } from 'react-icons/fa';
 import Modal from '../components/Modal';
 import ChangeAddress from '../components/ChangeAddress';
 import { decreaseQuantity, increaseQuantity, removeFromCart } from '../redux/cartSlice';
 import { useNavigate } from 'react-router-dom';
 
-
-
-
 const Cart = () => {
   const cart = useSelector(state => state.cart);
-  const [address, setAddress] = useState('main street,0012');
+  const [address, setAddress] = useState('Main Street, 0012');
   const [isModelOpen, setIsModelOpen] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   return (
-    <div className='container mx-auto py-8 min-h-96 px-4 md:px-16 lg:px-24'>
-      {cart.products.length > 0 ?
-        <div>
-          <h3 className='text-2xl font-semibold mb-4'>Shopping Cart</h3>
-          <div className='flex flex-col md:flex-row justify-between space-x-10 mt-8'>
-            <div className='md:w-2/3'>
-              <div className='flex justify-between border-b items-center mb-4 text-xs font-bold'>
-                <p>Products</p>
-                <div className='flex space-x-8'>
-                  <p>Price</p>
-                  <p>Quantity</p>
-                  <p>Subtotal</p>
-                  <p>Remove</p>
+    <div className='container mx-auto py-8 px-4 sm:px-6 lg:px-8 max-w-7xl'>
+      {cart.products.length > 0 ? (
+        <div className='space-y-8'>
+          <div className='flex items-center justify-between'>
+            <h1 className='text-3xl font-bold text-gray-900'>Your Shopping Cart</h1>
+            <button 
+              onClick={() => navigate(-1)}
+              className='flex items-center text-blue-600 hover:text-blue-800 transition-colors'
+            >
+              <FaChevronLeft className='mr-1' />
+              Continue Shopping
+            </button>
+          </div>
+
+          <div className='flex flex-col lg:flex-row gap-8'>
+            {/* Cart Items */}
+            <div className='lg:w-2/3'>
+              <div className='bg-white rounded-xl shadow-sm overflow-hidden'>
+                {/* Table Header */}
+                <div className='hidden md:grid grid-cols-12 gap-4 bg-gray-50 p-4 border-b border-gray-200'>
+                  <div className='col-span-5'>
+                    <p className='text-sm font-medium text-gray-500 uppercase'>Product</p>
+                  </div>
+                  <div className='col-span-2 text-center'>
+                    <p className='text-sm font-medium text-gray-500 uppercase'>Price</p>
+                  </div>
+                  <div className='col-span-3 text-center'>
+                    <p className='text-sm font-medium text-gray-500 uppercase'>Quantity</p>
+                  </div>
+                  <div className='col-span-2 text-right'>
+                    <p className='text-sm font-medium text-gray-500 uppercase'>Subtotal</p>
+                  </div>
                 </div>
-              </div>
-              <div>
-                {cart.products.map((product) =>
-                  <div 
-                  key={product.id}
-                  className='flex items-center justify-between p-3 border-b'>
-                    <div className='md:flex items-center space-x-4'>
-                      <img src={product.image} alt=""  className='w-16 h-16 object-contain rounded'/>
-                      <div className='flex-1 ml-4'>
-                        <h3 className='text-lg font-semibold'>{product.name}</h3>
+
+                {/* Cart Items */}
+                <div className='divide-y divide-gray-200'>
+                  {cart.products.map((product) => (
+                    <div key={product.id} className='grid grid-cols-1 md:grid-cols-12 gap-4 p-4 items-center'>
+                      {/* Product Info */}
+                      <div className='col-span-5 flex items-center space-x-4'>
+                        <img 
+                          src={product.image} 
+                          alt={product.name} 
+                          className='w-20 h-20 object-contain rounded-lg bg-gray-100 p-2 border border-gray-200'
+                        />
+                        <div>
+                          <h3 className='text-md font-medium text-gray-800'>{product.name}</h3>
+                        </div>
+                      </div>
+
+                      {/* Price */}
+                      <div className='col-span-2 text-center'>
+                        <p className='text-gray-700'>${product.price.toFixed(2)}</p>
+                      </div>
+
+                      {/* Quantity */}
+                      <div className='col-span-3 flex items-center justify-center'>
+                        <div className='flex items-center border border-gray-300 rounded-md'>
+                          <button 
+                            className='px-3 py-1 text-gray-600 hover:bg-gray-100 transition-colors'
+                            onClick={() => dispatch(decreaseQuantity(product.id))}
+                          >
+                            -
+                          </button>
+                          <span className='px-3 py-1 border-x border-gray-300'>{product.quantity}</span>
+                          <button 
+                            className='px-3 py-1 text-gray-600 hover:bg-gray-100 transition-colors'
+                            onClick={() => dispatch(increaseQuantity(product.id))}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Subtotal & Remove */}
+                      <div className='col-span-2 flex items-center justify-end space-x-4'>
+                        <p className='text-gray-800 font-medium'>${(product.quantity * product.price).toFixed(2)}</p>
+                        <button 
+                          className='text-gray-400 hover:text-red-500 transition-colors'
+                          onClick={() => dispatch(removeFromCart(product.id))}
+                        >
+                          <FaTrashAlt />
+                        </button>
                       </div>
                     </div>
-                    <div className='flex space-x-12 items-center'>
-                      <p>${product.price}</p>
-                      <div className='flex items-center justify-center border'>
-                        <button className='text-xl font-bold px-1.5 border-r'
-                        onClick={() => dispatch(decreaseQuantity(product.id))}>-</button>
-                        <p className='text-xl px-2'>{product.quantity}</p>
-                        <button className='text-xl px-1 border-l'
-                        onClick={() => dispatch(increaseQuantity(product.id))}>+</button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Order Summary */}
+            <div className='lg:w-1/3'>
+              <div className='bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-6'>
+                <h3 className='text-lg font-semibold text-gray-900 mb-6'>Order Summary</h3>
+                
+                <div className='space-y-4'>
+                  <div className='flex justify-between'>
+                    <span className='text-gray-600'>Total Items:</span>
+                    <span className='font-medium'>{cart.totalQuantity}</span>
+                  </div>
+                  
+                  <div className='border-t border-gray-200 pt-4'>
+                    <div className='flex justify-between items-start'>
+                      <div>
+                        <p className='text-gray-600'>Shipping to:</p>
+                        <p className='text-sm font-medium mt-1'>{address}</p>
                       </div>
-                      <p>${(product.quantity * product.price).toFixed(2)}</p>
-                      <button className='text-red-500 hover:text-red-700' onClick={() => dispatch(removeFromCart(product.id))}>
-                        <FaTrashAlt />
+                      <button 
+                        className='text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors'
+                        onClick={() => setIsModelOpen(true)}
+                      >
+                        Change
                       </button>
                     </div>
                   </div>
-                )}
+                  
+                  <div className='border-t border-gray-200 pt-4'>
+                    <div className='flex justify-between'>
+                      <span className='text-gray-600'>Subtotal:</span>
+                      <span className='font-medium'>${cart.totalPrice.toFixed(2)}</span>
+                    </div>
+                    <div className='flex justify-between mt-1'>
+                      <span className='text-gray-600'>Shipping:</span>
+                      <span className='font-medium'>Free</span>
+                    </div>
+                  </div>
+                  
+                  <div className='border-t border-gray-200 pt-4'>
+                    <div className='flex justify-between'>
+                      <span className='text-lg font-semibold'>Total:</span>
+                      <span className='text-lg font-bold text-gray-900'>${cart.totalPrice.toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <button 
+                  className='w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium mt-6 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                  onClick={() => navigate('/checkout')}
+                >
+                  Proceed to Checkout
+                </button>
               </div>
-            </div>
-
-            <div className='md:w-1/3 bg-white p-6 rounded-lg shadow-md border'>
-              <h3 className='text-sm font-semibold mb-5'>Cart Total</h3>
-              <div className='flex justify-between mb-5 border-b pb-1'>
-                <span className='text-sm'>Total Items:</span>
-                <span>{cart.totalQuantity}</span> 
-              </div>
-              <div className='mb-4 border-b pb-2'>
-                <p>Shipping:</p>
-                <p className='ml-2'>Shipping to</p>
-                <span className='text-xs font-bold'>{address}</span>
-                <button className='text-blue-500 hover:underline mt-1 ml-2' onClick={() => setIsModelOpen(true)}>Change address</button>
-              </div>
-              <div className='flex justify-between mb-4'>
-                <span>Total Price</span>
-                <span>{cart.totalPrice.toFixed(2)}</span>
-              </div>
-              <button className='w-full bg-red-600 text-white py-2 hover:bg-red-800'
-              onClick={() => navigate('/checkout')}>Proceed to Checkout</button>
             </div>
           </div>
-          <Modal
-          isModelOpen={isModelOpen}
-          setIsModelOpen={setIsModelOpen}> 
-          <ChangeAddress  setAddress={setAddress} setIsModelOpen={setIsModelOpen}/>
+
+          {/* Address Change Modal */}
+          <Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen}>
+            <ChangeAddress setAddress={setAddress} setIsModelOpen={setIsModelOpen} />
           </Modal>
         </div>
-        : <div className='flex justify-center'>
-          <img src={EmptyCart} alt="" className='h-96' />
-        </div>}
+      ) : (
+        <div className='flex flex-col items-center justify-center py-12'>
+          <img src={EmptyCart} alt="Empty cart" className='h-64 w-64 object-contain' />
+          <h2 className='text-2xl font-bold text-gray-800 mt-6'>Your cart is empty</h2>
+          <p className='text-gray-600 mt-2 mb-8'>Looks like you haven't added any items yet</p>
+          <button 
+            onClick={() => navigate('/')}
+            className='px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors'
+          >
+            Continue Shopping
+          </button>
+        </div>
+      )}
     </div>
   );
 }
