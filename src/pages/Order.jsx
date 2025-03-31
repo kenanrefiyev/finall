@@ -30,7 +30,6 @@ const Order = ({ order }) => {
                         <h4 className='text-lg font-semibold text-gray-800 mb-3'>Shipping Information</h4>
                         <div className='bg-gray-50 p-4 rounded-lg'>
                             <p className='text-gray-700'>{order.shippingInformation.address}</p>
-                            <p className='text-gray-700'>{order.shippingInformation.city}, {order.shippingInformation.zip}</p>
                         </div>
                     </div>
 
