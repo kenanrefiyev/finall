@@ -12,6 +12,9 @@ import Details from "./pages/Details"
 import Blog from "./components/Blog"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import TrackOrder from "./pages/TrackOrder"
+import DeliveryReturns from "./pages/DeliveryReturns"
+
 
 
 
@@ -28,6 +31,8 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout setOrder={setOrder} />} />
           <Route path="/order-confirmation" element={<Order order={order} />} />
+          <Route path="/track-order" element={<TrackOrder />} />
+          <Route path="/delivery-returns" element={<DeliveryReturns />} />
           <Route path="/filter-data" element={<FilterData />} />
           <Route path="/product/:id" element={<Details />} />
           <Route path="/blog" element={<Blog />} />

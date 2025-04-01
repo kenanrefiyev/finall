@@ -4,6 +4,16 @@ import { useNavigate } from 'react-router-dom'
 const Order = ({ order }) => {
     const navigate = useNavigate()
     
+    const handleTrackOrder = () => {
+        // Navigate to track order page with order details
+        navigate('/track-order', {
+            state: {
+                orderId: order.orderNumber,
+                email: order.customerEmail // Make sure this exists in your order object
+            }
+        })
+    }
+    
     return (
         <div className='container mx-auto py-8 px-4 sm:px-6 lg:px-8 max-w-4xl'>
             <div className='text-center mb-8'>
@@ -60,6 +70,7 @@ const Order = ({ order }) => {
             <div className='flex flex-col sm:flex-row justify-center gap-4 mt-8'>
                 <button 
                     className='px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
+                    onClick={handleTrackOrder}
                 >
                     Track Order
                 </button>

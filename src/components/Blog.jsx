@@ -94,9 +94,6 @@ const Blog = () => {
                   <span>{featuredPost.readTime}</span>
                 </div>
               </div>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                Read More
-              </button>
             </div>
           </div>
         </div>
@@ -130,9 +127,6 @@ const Blog = () => {
                     <span>{post.readTime}</span>
                   </div>
                 </div>
-                <button className="text-blue-600 font-medium hover:underline flex items-center">
-                  Read Article <FaChevronRight className="h-4 w-4 ml-1" />
-                </button>
               </div>
             </div>
           ))}

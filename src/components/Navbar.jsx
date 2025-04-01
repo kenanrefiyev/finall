@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { FaChevronLeft, FaChevronRight, FaShoppingCart } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setSearchTerm } from '../redux/productSlice';
 import Login from './Login';
 import Register from './Register';
 import Modal from './Modal';
+
 
 const CreatexHomepage = () => {
   const products = useSelector(state => state.cart.products);
@@ -73,6 +74,14 @@ const CreatexHomepage = () => {
   const handleCartClick = () => {
     navigate('/cart');
   };
+  const [currency, setCurrency] = useState('USD');
+  const conversionRates = {
+    USD: { rate: 1, flag: "https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" },
+    AZN: { rate: 1.7, flag: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Flag_of_Azerbaijan.svg" }
+  };
+  const updateCurrency = (e) => {
+    setCurrency(e.target.value);
+  };
 
 
   return (
@@ -81,8 +90,12 @@ const CreatexHomepage = () => {
         <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
           <div className="flex flex-wrap justify-center md:justify-start space-x-4">
             <span className="text-gray-500">Available 24/7 | (405)555-0128</span>
-            <a href="" className="text-gray-500 hover:text-gray-700">Delivery & returns</a>
-            <a href="" className="text-gray-500 hover:text-gray-700">Track order</a>
+            <Link to="/delivery-returns" className="text-gray-500 hover:text-gray-700">
+  Delivery & returns
+</Link>
+<Link to="/track-order" className="text-gray-500 hover:text-gray-700">
+  Track Order
+</Link>
             <a href=""  className="text-gray-500 hover:text-gray-700"
             onClick={(e) => {
               e.preventDefault(); 
@@ -96,10 +109,10 @@ const CreatexHomepage = () => {
           </div>
           <div className="flex items-center space-x-4 mt-2 md:mt-0">
             <div className="flex items-center">
-              <img src="https://img.freepik.com/premium-vector/usa-flag-simple-illustration-independence-day-election_599062-7388.jpg" alt="Flag" className="w-6 h-4 mr-2" />
-              <select className="text-gray-700">
-                <option>Eng / $</option>
-                <option>Aze/ ₼</option>
+            <img src={conversionRates[currency].flag} alt="Flag" className="w-6 h-4 mr-2" />
+            <select className="text-gray-700" onChange={updateCurrency} value={currency}>
+                <option value="USD">Eng / $</option>
+                <option value="AZN">Aze / ₼</option>
               </select>
             </div>
             <a className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => setIsModelOpen(true)}>Log in / Register</a>

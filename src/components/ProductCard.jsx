@@ -23,6 +23,8 @@ const ProductCard = ({ product }) => {
       draggable: true,
       progress: undefined,
     })
+
+    
   }
 
   return (
