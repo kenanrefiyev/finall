@@ -1,13 +1,20 @@
 import React from 'react'
 import { FaStar } from 'react-icons/fa'
 import { addToCart } from '../redux/cartSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch()
+  const { currentCurrency, conversionRates } = useSelector(state => state.currency);
+
+  const convertPrice = (price) => {
+    const rate = conversionRates[currentCurrency].rate;
+    const symbol = conversionRates[currentCurrency].symbol;
+    return `${symbol}${(price * rate).toFixed(2)}`;
+  };
 
   const handleAddToCart = (e, product) => {
     e.stopPropagation()
@@ -23,8 +30,6 @@ const ProductCard = ({ product }) => {
       draggable: true,
       progress: undefined,
     })
-
-    
   }
 
   return (
@@ -33,7 +38,7 @@ const ProductCard = ({ product }) => {
     transform transition-transform duration-300 hover:scale-105'>
         <img src={product.image} alt="" className='w-full h-48 object-contain mb-4' />
         <h3 className='text-lg font-semibold'>{product.name}</h3>
-        <p className='text-gray-500'>${product.price}</p>
+        <p className='text-gray-500'>{convertPrice(product.price)}</p>
         <div className='flex items-center mt-2'>
           <FaStar className='text-yellow-500' />
           <FaStar className='text-yellow-500' />

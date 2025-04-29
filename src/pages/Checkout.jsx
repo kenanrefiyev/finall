@@ -19,6 +19,25 @@ const Checkout = ({ setOrder }) => {
     const navigate = useNavigate()
     
     const handleOrder = () => {
+        if (
+            !shippinhInfo.address.trim() ||
+            !shippinhInfo.city.trim() ||
+            !shippinhInfo.zip.trim() ||
+            !phone || phone.length < 13
+        ) {
+            alert("Zəhmət olmasa bütün məlumatları düzgün daxil edin.");
+            return;
+        }
+        if (paymentMethod === "dc") {
+            const cardNumber = document.getElementById("cardNumber")?.value.trim();
+            const cardName = document.getElementById("cardName")?.value.trim();
+            const expiry = document.getElementById("expiry")?.value.trim();
+            const cvv = document.getElementById("cvv")?.value.trim();
+    
+            if (!cardNumber || cardNumber.length !== 16 || !cardName || !expiry || expiry.length !== 5 || !cvv || cvv.length !== 3) {
+                alert("Zəhmət olmasa kart məlumatlarını düzgün doldurun.");
+                return;
+            }}
         const newOrder = {
             products: cart.products,
             orderNumber: '12345',

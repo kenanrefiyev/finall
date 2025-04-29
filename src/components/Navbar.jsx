@@ -3,6 +3,7 @@ import { FaChevronLeft, FaChevronRight, FaShoppingCart } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { setSearchTerm } from '../redux/productSlice';
+import { setCurrency } from '../redux/currencySlice';
 import Login from './Login';
 import Register from './Register';
 import Modal from './Modal';
@@ -10,6 +11,7 @@ import Modal from './Modal';
 
 const CreatexHomepage = () => {
   const products = useSelector(state => state.cart.products);
+  const { currentCurrency, conversionRates } = useSelector(state => state.currency);
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [
@@ -74,19 +76,15 @@ const CreatexHomepage = () => {
   const handleCartClick = () => {
     navigate('/cart');
   };
-  const [currency, setCurrency] = useState('USD');
-  const conversionRates = {
-    USD: { rate: 1, flag: "https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" },
-    AZN: { rate: 1.7, flag: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Flag_of_Azerbaijan.svg" }
-  };
+
   const updateCurrency = (e) => {
-    setCurrency(e.target.value);
+    dispatch(setCurrency(e.target.value));
   };
 
 
   return (
     <div className="min-h-screen bg-[#F5F5F5] font-sans">
-      <nav className="bg-gray-900 shadow-sm">
+      <nav className="bg-gray-900 shadow-sm sticky top-0 left-0 z-50">
         <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
           <div className="flex flex-wrap justify-center md:justify-start space-x-4">
             <span className="text-gray-500">Available 24/7 | (405)555-0128</span>
@@ -109,10 +107,10 @@ const CreatexHomepage = () => {
           </div>
           <div className="flex items-center space-x-4 mt-2 md:mt-0">
             <div className="flex items-center">
-            <img src={conversionRates[currency].flag} alt="Flag" className="w-6 h-4 mr-2" />
-            <select className="text-gray-700" onChange={updateCurrency} value={currency}>
-                <option value="USD">Eng / $</option>
-                <option value="AZN">Aze / ₼</option>
+              <img src={conversionRates[currentCurrency].flag} alt="Flag" className="w-6 h-4 mr-2" />
+              <select className="text-gray-700" onChange={updateCurrency} value={currentCurrency}>
+                <option value="USD">Eng / {conversionRates.USD.symbol}</option>
+                <option value="AZN">Aze / {conversionRates.AZN.symbol}</option>
               </select>
             </div>
             <a className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => setIsModelOpen(true)}>Log in / Register</a>

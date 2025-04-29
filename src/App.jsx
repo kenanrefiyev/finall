@@ -14,15 +14,14 @@ import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import TrackOrder from "./pages/TrackOrder"
 import DeliveryReturns from "./pages/DeliveryReturns"
-
-
-
+import Login from "./components/Login"
 
 function App() {
   const [order, setOrder] = useState(null)
+
   return (
     <>
-    <ToastContainer /> 
+      <ToastContainer />
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -36,6 +35,7 @@ function App() {
           <Route path="/filter-data" element={<FilterData />} />
           <Route path="/product/:id" element={<Details />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
       </BrowserRouter>

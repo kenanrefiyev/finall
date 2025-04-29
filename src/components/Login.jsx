@@ -1,4 +1,11 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
+import { auth } from '../../firebase';
+import { useNavigate } from 'react-router-dom';
+
+
+
+
 
 const Login = ({ openSignUp }) => {
   const [formData, setFormData] = useState({
@@ -17,8 +24,6 @@ const Login = ({ openSignUp }) => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-    
-    // Clear error when user types
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -48,10 +53,27 @@ const Login = ({ openSignUp }) => {
     return valid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    const navigate = useNavigate();
     e.preventDefault();
     if (validateForm()) {
-      console.log('Login data:', formData);
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+        console.log("Daxil olundu:", userCredential.user);
+        navigate("/")
+      } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error("Firebase error:", errorCode, errorMessage);
+        setErrors((prev) => ({
+          ...prev,
+          password: "Email və ya şifrə yanlışdır",
+        }));
+      }
     }
   };
 
@@ -72,12 +94,12 @@ const Login = ({ openSignUp }) => {
             id="email"
             name="email"
             placeholder="your@email.com"
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition ${
-              errors.email ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition ${errors.email ? 'border-red-500' : 'border-gray-300'
+              }`}
             value={formData.email}
             onChange={handleChange}
           />
+
           {errors.email && (
             <p className="mt-1 text-sm text-red-600">{errors.email}</p>
           )}
@@ -92,12 +114,12 @@ const Login = ({ openSignUp }) => {
             id="password"
             name="password"
             placeholder="••••••••"
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition ${
-              errors.password ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition ${errors.password ? 'border-red-500' : 'border-gray-300'
+              }`}
             value={formData.password}
             onChange={handleChange}
           />
+
           {errors.password && (
             <p className="mt-1 text-sm text-red-600">{errors.password}</p>
           )}

@@ -5,11 +5,11 @@ const Order = ({ order }) => {
     const navigate = useNavigate()
     
     const handleTrackOrder = () => {
-        // Navigate to track order page with order details
+        
         navigate('/track-order', {
             state: {
                 orderId: order.orderNumber,
-                email: order.customerEmail // Make sure this exists in your order object
+                email: order.customerEmail 
             }
         })
     }

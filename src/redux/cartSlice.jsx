@@ -56,7 +56,7 @@ const cartSlice = createSlice({
                 findItem.quantity--;
                 findItem.totalPrice -= findItem.price;
                 state.totalQuantity--;
-                state.totalPrice == findItem.price
+                state.totalPrice -= findItem.price
             }
         }
     }

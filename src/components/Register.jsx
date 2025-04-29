@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../../firebase';
 
 const Register = ({ openLogin }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+
   const [errors, setErrors] = useState({
     email: '',
     password: ''
   });
+
+  const navigate = useNavigate(); // yönləndirmə üçün
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,7 +22,7 @@ const Register = ({ openLogin }) => {
       ...prev,
       [name]: value
     }));
-    // Clear error when user types
+    
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -49,12 +55,18 @@ const Register = ({ openLogin }) => {
     return valid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      // Form is valid, proceed with registration
-      console.log('Registration data:', formData);
-      // Here you would typically call your registration API
+    if (!validateForm()) return;
+
+    try {
+      
+      await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      console.log('Qeydiyyat uğurludur!');
+      navigate("/login"); 
+    } catch (error) {
+      console.error('Firebase qeydiyyat xətası:', error.message);
+      setErrors({ ...errors, password: 'Qeydiyyat zamanı səhv baş verdi' });
     }
   };
 
@@ -66,6 +78,7 @@ const Register = ({ openLogin }) => {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Email */}
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
             Email Address <span className="text-red-500">*</span>
@@ -81,11 +94,10 @@ const Register = ({ openLogin }) => {
             value={formData.email}
             onChange={handleChange}
           />
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-          )}
+          {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
         </div>
 
+        {/* Password */}
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
             Password <span className="text-red-500">*</span>
@@ -101,9 +113,7 @@ const Register = ({ openLogin }) => {
             value={formData.password}
             onChange={handleChange}
           />
-          {errors.password && (
-            <p className="mt-1 text-sm text-red-600">{errors.password}</p>
-          )}
+          {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
         </div>
 
         <button
