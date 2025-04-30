@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setShippingAddress } from '../redux/cartSlice'
 
 const ChangeAddress = ({ setAddress, setIsModelOpen }) => {
   const [newAddress, setNewAddress] = useState('')
+  const dispatch = useDispatch()
 
   const onClose = () => {
     if (newAddress.trim()) {
       setAddress(newAddress)
+      dispatch(setShippingAddress(newAddress))
     }
     setIsModelOpen(false)
   }

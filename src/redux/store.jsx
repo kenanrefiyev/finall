@@ -3,6 +3,7 @@ import cartSlice from './cartSlice';
 import productSlice from './productSlice';
 import currencySlice from './currencySlice';
 
+
 const store = configureStore({
     reducer: {
         cart: cartSlice,

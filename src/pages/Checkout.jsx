@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -16,8 +16,24 @@ const Checkout = ({ setOrder }) => {
     const [phone, setPhone] = useState('+994')
 
     const cart = useSelector((state) => state.cart)
+    const currency = useSelector((state) => state.currency.currentCurrency); // Mövcud valyuta
+    const conversionRate = useSelector((state) => state.currency.conversionRates[currency]);
     const navigate = useNavigate()
+    const convertPrice = (price) => {
+        return (price * conversionRate.rate).toFixed(2); // Qiyməti mövcud valyutaya çevirir
+    };
+
     
+    // Use shipping address from Redux on component mount
+    useEffect(() => {
+        if (cart.shippingAddress) {
+            setShippinInfo(prev => ({
+                ...prev,
+                address: cart.shippingAddress
+            }))
+        }
+    }, [cart.shippingAddress])
+
     const handleOrder = () => {
         if (
             !shippinhInfo.address.trim() ||
@@ -129,6 +145,7 @@ const Checkout = ({ setOrder }) => {
                                     id="address"
                                     placeholder='Enter your street address' 
                                     className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition'
+                                    value={shippinhInfo.address}
                                     onChange={(e) => setShippinInfo({ ...shippinhInfo, address: e.target.value })}
                                 />
                             </div>
@@ -292,12 +309,14 @@ const Checkout = ({ setOrder }) => {
                                         <div>
                                             <h4 className='text-sm font-medium text-gray-800 line-clamp-2'>{product.name}</h4>
                                             <p className='text-xs text-gray-500 mt-1'>
-                                                ${product.price} × {product.quantity}
+                                            {conversionRate.symbol} {convertPrice(product.price)} ×{' '}
+                                            {product.quantity}
                                             </p>
                                         </div>
                                     </div>
                                     <div className='text-sm font-medium text-gray-800'>
-                                        ${(product.price * product.quantity).toFixed(2)}
+                                    {conversionRate.symbol}{' '}
+                                    {(product.price * product.quantity * conversionRate.rate).toFixed(2)}
                                     </div>
                                 </div>
                             ))}
@@ -306,7 +325,7 @@ const Checkout = ({ setOrder }) => {
                         <div className='mt-6 pt-4 border-t border-gray-200 space-y-3'>
                             <div className='flex justify-between text-gray-600'>
                                 <span>Subtotal</span>
-                                <span>${cart.totalPrice.toFixed(2)}</span>
+                                <span>{conversionRate.symbol} {convertPrice(cart.totalPrice)}</span>
                             </div>
                             <div className='flex justify-between text-gray-600'>
                                 <span>Shipping</span>
@@ -314,7 +333,7 @@ const Checkout = ({ setOrder }) => {
                             </div>
                             <div className='flex justify-between text-lg font-semibold text-gray-800 pt-2'>
                                 <span>Total</span>
-                                <span>${cart.totalPrice.toFixed(2)}</span>
+                                <span>{conversionRate.symbol} {convertPrice(cart.totalPrice)}</span>
                             </div>
                         </div>
                         

@@ -9,11 +9,15 @@ import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const cart = useSelector(state => state.cart);
+  const currency = useSelector((state) => state.currency.currentCurrency); // Mövcud valyuta
+  const conversionRate = useSelector((state) => state.currency.conversionRates[currency]); // Mövcud valyutanın məzənnəsi
   const [address, setAddress] = useState('Main Street, 0012');
   const [isModelOpen, setIsModelOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const convertPrice = (price) => {
+    return (price * conversionRate.rate).toFixed(2); // Qiyməti mövcud valyutaya çevirir
+  };
   return (
     <div className='container mx-auto py-8 px-4 sm:px-6 lg:px-8 max-w-7xl'>
       {cart.products.length > 0 ? (
@@ -66,7 +70,8 @@ const Cart = () => {
 
                    
                       <div className='col-span-2 text-center'>
-                        <p className='text-gray-700'>${product.price.toFixed(2)}</p>
+                        <p className='text-gray-700'>                          {conversionRate.symbol} {convertPrice(product.price)}
+                        </p>
                       </div>
 
                       <div className='col-span-3 flex items-center justify-center'>
@@ -88,7 +93,7 @@ const Cart = () => {
                       </div>
 
                       <div className='col-span-2 flex items-center justify-end space-x-4'>
-                        <p className='text-gray-800 font-medium'>${(product.quantity * product.price).toFixed(2)}</p>
+                        <p className='text-gray-800 font-medium'> {conversionRate.symbol} {(product.quantity * convertPrice(product.price)).toFixed(2)}</p>
                         <button 
                           className='text-gray-400 hover:text-red-500 transition-colors'
                           onClick={() => dispatch(removeFromCart(product.id))}
@@ -131,7 +136,7 @@ const Cart = () => {
                   <div className='border-t border-gray-200 pt-4'>
                     <div className='flex justify-between'>
                       <span className='text-gray-600'>Subtotal:</span>
-                      <span className='font-medium'>${cart.totalPrice.toFixed(2)}</span>
+                      <span className='font-medium'> {conversionRate.symbol} {convertPrice(cart.totalPrice)}</span>
                     </div>
                     <div className='flex justify-between mt-1'>
                       <span className='text-gray-600'>Shipping:</span>
@@ -142,7 +147,7 @@ const Cart = () => {
                   <div className='border-t border-gray-200 pt-4'>
                     <div className='flex justify-between'>
                       <span className='text-lg font-semibold'>Total:</span>
-                      <span className='text-lg font-bold text-gray-900'>${cart.totalPrice.toFixed(2)}</span>
+                      <span className='text-lg font-bold text-gray-900'> {conversionRate.symbol} {convertPrice(cart.totalPrice)}</span>
                     </div>
                   </div>
                 </div>

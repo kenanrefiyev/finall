@@ -83,152 +83,155 @@ const CreatexHomepage = () => {
 
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] font-sans">
-      <nav className="bg-gray-900 shadow-sm sticky top-0 left-0 z-50">
-        <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
-          <div className="flex flex-wrap justify-center md:justify-start space-x-4">
-            <span className="text-gray-500">Available 24/7 | (405)555-0128</span>
-            <Link to="/delivery-returns" className="text-gray-500 hover:text-gray-700">
-  Delivery & returns
-</Link>
-<Link to="/track-order" className="text-gray-500 hover:text-gray-700">
-  Track Order
-</Link>
-            <a href=""  className="text-gray-500 hover:text-gray-700"
-            onClick={(e) => {
-              e.preventDefault(); 
-              document.getElementById("blog")?.scrollIntoView({ behavior: "smooth" });
-           }}>Blog</a>
-            <a href="" className="text-gray-500 hover:text-gray-700"
-            onClick={(e) => {
-              e.preventDefault(); 
-              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-           }}>Contacts</a>
-          </div>
-          <div className="flex items-center space-x-4 mt-2 md:mt-0">
-            <div className="flex items-center">
-              <img src={conversionRates[currentCurrency].flag} alt="Flag" className="w-6 h-4 mr-2" />
-              <select className="text-gray-700" onChange={updateCurrency} value={currentCurrency}>
-                <option value="USD">Eng / {conversionRates.USD.symbol}</option>
-                <option value="AZN">Aze / {conversionRates.AZN.symbol}</option>
-              </select>
+    <div className="relative">
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <nav className="bg-gray-900 shadow-sm w-full">
+          <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
+            <div className="flex flex-wrap justify-center md:justify-start space-x-4">
+              <span className="text-gray-500">Available 24/7 | (405)555-0128</span>
+              <Link to="/delivery-returns" className="text-gray-500 hover:text-gray-700">
+                Delivery & returns
+              </Link>
+              <Link to="/track-order" className="text-gray-500 hover:text-gray-700">
+                Track Order
+              </Link>
+              <a href="" className="text-gray-500 hover:text-gray-700"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("blog")?.scrollIntoView({ behavior: "smooth" });
+                }}>Blog</a>
+              <a href="" className="text-gray-500 hover:text-gray-700"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                }}>Contacts</a>
             </div>
-            <a className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => setIsModelOpen(true)}>Log in / Register</a>
-            <div className="relative">
-              <FaShoppingCart className="text-gray-500 hover:text-gray-700 cursor-pointer" size={20} onClick={handleCartClick} />
-              {products.length > 0 && (
-                <span className='absolute -top-2 -right-2 text-white bg-red-600 text-xs rounded-full w-4 h-5 flex items-center justify-center'>
-                  {products.length}
-                </span>
-              )}
+            <div className="flex items-center space-x-4 mt-2 md:mt-0">
+              <div className="flex items-center">
+                <img src={conversionRates[currentCurrency].flag} alt="Flag" className="w-6 h-4 mr-2" />
+                <select className="text-gray-700" onChange={updateCurrency} value={currentCurrency}>
+                  <option value="USD">Eng / {conversionRates.USD.symbol}</option>
+                  <option value="AZN">Aze / {conversionRates.AZN.symbol}</option>
+                </select>
+              </div>
+              <a className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => setIsModelOpen(true)}>Log in / Register</a>
+              <div className="relative">
+                <FaShoppingCart className="text-gray-500 hover:text-gray-700 cursor-pointer" size={20} onClick={handleCartClick} />
+                {products.length > 0 && (
+                  <span className='absolute -top-2 -right-2 text-white bg-red-600 text-xs rounded-full w-4 h-5 flex items-center justify-center'>
+                    {products.length}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
-      <div className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800 cursor-pointer" onClick={() => navigate('/')}  
-             >CREATEX</h1>
-          <nav className="flex flex-wrap justify-center md:justify-start space-x-6 mt-2 md:mt-0">
-            <a href="#" className="text-gray-700 hover:text-gray-900"
-            onClick={(e) => {
-              e.preventDefault(); 
-              document.getElementById("categ")?.scrollIntoView({ behavior: "smooth" });
-           }}>Women</a>
-            <a href="#" className="text-gray-700 hover:text-gray-900"
-            onClick={(e) => {
-              e.preventDefault(); 
-              document.getElementById("categ")?.scrollIntoView({ behavior: "smooth" });
-           }}>Men</a>
-            <a href="#" className="text-gray-700 hover:text-gray-900"
-            onClick={(e) => {
-              e.preventDefault(); 
-              document.getElementById("categ")?.scrollIntoView({ behavior: "smooth" });
-           }}>Girls</a>
-            <a href="#" className="text-gray-700 hover:text-gray-900"
-            onClick={(e) => {
-              e.preventDefault(); 
-              document.getElementById("categ")?.scrollIntoView({ behavior: "smooth" });
-           }}>Boys</a>
-            <a href="#" className="text-red-500 hover:text-red-600" onClick={(e) => {
-      e.preventDefault(); 
-      document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" });
-   }}
-            >Sale</a>
-          </nav>
-          <form onSubmit={handleSearch} className="flex mt-2 md:mt-0 w-full md:w-auto">
-            <input
-              type="text"
-              placeholder="Search for products..."
-              className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 w-full md:w-auto"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </form>
+        </nav>
+        <div className="bg-white shadow-sm w-full">
+          <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
+            <h1 className="text-2xl font-bold text-gray-800 cursor-pointer" onClick={() => navigate('/')}
+            >CREATEX</h1>
+            <nav className="flex flex-wrap justify-center md:justify-start space-x-6 mt-2 md:mt-0">
+              <a href="#" className="text-gray-700 hover:text-gray-900"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("categ")?.scrollIntoView({ behavior: "smooth" });
+                }}>Women</a>
+              <a href="#" className="text-gray-700 hover:text-gray-900"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("categ")?.scrollIntoView({ behavior: "smooth" });
+                }}>Men</a>
+              <a href="#" className="text-gray-700 hover:text-gray-900"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("categ")?.scrollIntoView({ behavior: "smooth" });
+                }}>Girls</a>
+              <a href="#" className="text-gray-700 hover:text-gray-900"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("categ")?.scrollIntoView({ behavior: "smooth" });
+                }}>Boys</a>
+              <a href="#" className="text-red-500 hover:text-red-600" onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              >Sale</a>
+            </nav>
+            <form onSubmit={handleSearch} className="flex mt-2 md:mt-0 w-full md:w-auto">
+              <input
+                type="text"
+                placeholder="Search for products..."
+                className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 w-full md:w-auto"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </form>
+          </div>
         </div>
       </div>
-    
-      <div className="relative bg-orange-50 w-full  py-12 md:py-38">
-        <div className="flex items-center w-full h-full p-4 md:p-10">
-          <button
-            onClick={prevSlide}
-            className="absolute left-2 md:left-6 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100 focus:outline-none"
-            aria-label="Previous slide"
-          >
-            <FaChevronLeft className="w-6 h-6 text-gray-800" />
-          </button>
+      <div className="pt-32">
+        <div className="relative bg-orange-50 w-full py-12 md:py-38">
+          <div className="flex items-center w-full h-full p-4 md:p-10">
+            <button
+              onClick={prevSlide}
+              className="absolute left-2 md:left-6 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100 focus:outline-none"
+              aria-label="Previous slide"
+            >
+              <FaChevronLeft className="w-6 h-6 text-gray-800" />
+            </button>
 
 
-          <div className="flex flex-col md:flex-row items-center w-full">
+            <div className="flex flex-col md:flex-row items-center w-full">
 
-            <div className="w-full md:w-1/2 space-y-4 text-center md:text-left px-4 md:px-8">
-              <span className="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
-                {slides[currentSlide].tag}
-              </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
-                {slides[currentSlide].title}
-              </h2>
-              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                <button className="bg-white text-gray-800 px-4 py-2 rounded border border-gray-200 hover:bg-gray-100 transition">
-                  Shop sale
-                </button>
-                <button className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition">
-                  Shop the menswear
-                </button>
-              </div>
-
-              <div className="flex space-x-2 justify-center md:justify-start pt-4">
-                {slides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToSlide(index)}
-                    className={`w-8 h-8 rounded-full flex items-center justify-center transition ${currentSlide === index
-                        ? "bg-gray-800 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                      }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  >
-                    {index + 1}
+              <div className="w-full md:w-1/2 space-y-4 text-center md:text-left px-4 md:px-8">
+                <span className="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
+                  {slides[currentSlide].tag}
+                </span>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+                  {slides[currentSlide].title}
+                </h2>
+                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                  <button className="bg-white text-gray-800 px-4 py-2 rounded border border-gray-200 hover:bg-gray-100 transition">
+                    Shop sale
                   </button>
-                ))}
+                  <button className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition">
+                    Shop the menswear
+                  </button>
+                </div>
+
+                <div className="flex space-x-2 justify-center md:justify-start pt-4">
+                  {slides.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToSlide(index)}
+                      className={`w-8 h-8 rounded-full flex items-center justify-center transition ${currentSlide === index
+                          ? "bg-gray-800 text-white"
+                          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+
+              <div className="w-full md:w-1/2 h-full flex items-center justify-center p-4">
+                <img
+                  src={slides[currentSlide].image}
+                  alt={slides[currentSlide].title}
+                  className="rounded-lg object-contain w-full h-auto max-h-96 shadow-lg"
+                />
               </div>
             </div>
-
-
-            <div className="w-full md:w-1/2 h-full flex items-center justify-center p-4">
-              <img
-                src={slides[currentSlide].image}
-                alt={slides[currentSlide].title}
-                className="rounded-lg object-contain w-full h-auto max-h-96 shadow-lg"
-              />
-            </div>
+            <button
+              onClick={nextSlide}
+              className="absolute right-2 md:right-6 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100 focus:outline-none"
+              aria-label="Next slide"
+            >
+              <FaChevronRight className="w-6 h-6 text-gray-800" />
+            </button>
           </div>
-          <button
-            onClick={nextSlide}
-            className="absolute right-2 md:right-6 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100 focus:outline-none"
-            aria-label="Next slide"
-          >
-            <FaChevronRight className="w-6 h-6 text-gray-800" />
-          </button>
         </div>
       </div>
       <Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen}>
