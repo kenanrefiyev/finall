@@ -95,16 +95,12 @@ const CreatexHomepage = () => {
               <Link to="/track-order" className="text-gray-500 hover:text-gray-700">
                 Track Order
               </Link>
-              <a href="" className="text-gray-500 hover:text-gray-700"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("blog")?.scrollIntoView({ behavior: "smooth" });
-                }}>Blog</a>
-              <a href="" className="text-gray-500 hover:text-gray-700"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                }}>Contacts</a>
+              <Link to="/blog" className="text-gray-500 hover:text-gray-700">
+  Blog
+</Link>
+<Link to="/contact" className="text-gray-500 hover:text-gray-700">
+  Contact
+</Link>
             </div>
             <div className="flex items-center space-x-4 mt-2 md:mt-0">
               <div className="flex items-center">
@@ -169,68 +165,68 @@ const CreatexHomepage = () => {
         </div>
       </div>
       <div className="pt-32">
-        <div className="relative bg-orange-50 w-full py-12 md:py-38">
-          <div className="flex items-center w-full h-full p-4 md:p-10">
+      <div className="relative bg-orange-50 w-full py-12 md:py-38">
+  <div className="flex items-center w-full h-full p-4 md:p-10">
+    <button
+      onClick={prevSlide}
+      className="absolute left-2 md:left-6 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100 focus:outline-none"
+      aria-label="Previous slide"
+    >
+      <FaChevronLeft className="w-6 h-6 text-gray-800" />
+    </button>
+
+
+    <div className="flex flex-col md:flex-row items-center w-full">
+      <div className="w-full md:w-1/2 space-y-4 text-center md:text-left px-4 md:px-8">
+        <span className="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
+          {slides[currentSlide].tag}
+        </span>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+          {slides[currentSlide].title}
+        </h2>
+        <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+          <button className="bg-white text-gray-800 px-4 py-2 rounded border border-gray-200 hover:bg-gray-100 transition">
+            Shop sale
+          </button>
+          <button className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition">
+            Shop the menswear
+          </button>
+        </div>
+
+        <div className="flex space-x-2 justify-center md:justify-start pt-4">
+          {slides.map((_, index) => (
             <button
-              onClick={prevSlide}
-              className="absolute left-2 md:left-6 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100 focus:outline-none"
-              aria-label="Previous slide"
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition ${
+                currentSlide === index
+                  ? "bg-gray-800 text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
             >
-              <FaChevronLeft className="w-6 h-6 text-gray-800" />
+              {index + 1}
             </button>
+          ))}
+        </div>
+      </div>
 
 
-            <div className="flex flex-col md:flex-row items-center w-full">
-
-              <div className="w-full md:w-1/2 space-y-4 text-center md:text-left px-4 md:px-8">
-                <span className="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
-                  {slides[currentSlide].tag}
-                </span>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
-                  {slides[currentSlide].title}
-                </h2>
-                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                  <button className="bg-white text-gray-800 px-4 py-2 rounded border border-gray-200 hover:bg-gray-100 transition">
-                    Shop sale
-                  </button>
-                  <button className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition">
-                    Shop the menswear
-                  </button>
-                </div>
-
-                <div className="flex space-x-2 justify-center md:justify-start pt-4">
-                  {slides.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToSlide(index)}
-                      className={`w-8 h-8 rounded-full flex items-center justify-center transition ${currentSlide === index
-                          ? "bg-gray-800 text-white"
-                          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                        }`}
-                      aria-label={`Go to slide ${index + 1}`}
-                    >
-                      {index + 1}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-
-              <div className="w-full md:w-1/2 h-full flex items-center justify-center p-4">
-                <img
-                  src={slides[currentSlide].image}
-                  alt={slides[currentSlide].title}
-                  className="rounded-lg object-contain w-full h-auto max-h-96 shadow-lg"
-                />
-              </div>
-            </div>
-            <button
-              onClick={nextSlide}
-              className="absolute right-2 md:right-6 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100 focus:outline-none"
-              aria-label="Next slide"
-            >
-              <FaChevronRight className="w-6 h-6 text-gray-800" />
-            </button>
+      <div className="w-full md:w-1/2 h-full flex items-center justify-center p-4">
+        <img
+          src={slides[currentSlide].image}
+          alt={slides[currentSlide].title}
+          className="rounded-lg object-contain w-full h-auto max-h-96 shadow-lg"
+        />
+      </div>
+    </div>
+    <button
+      onClick={nextSlide}
+      className="absolute right-2 md:right-6 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100 focus:outline-none"
+      aria-label="Next slide"
+    >
+      <FaChevronRight className="w-6 h-6 text-gray-800" />
+    </button>
           </div>
         </div>
       </div>

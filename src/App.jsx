@@ -15,6 +15,8 @@ import "react-toastify/dist/ReactToastify.css"
 import TrackOrder from "./pages/TrackOrder"
 import DeliveryReturns from "./pages/DeliveryReturns"
 import Login from "./components/Login"
+import Contact from "./components/Contact"
+
 
 function App() {
   const [order, setOrder] = useState(null)
@@ -32,6 +34,7 @@ function App() {
           <Route path="/order-confirmation" element={<Order order={order} />} />
           <Route path="/track-order" element={<TrackOrder />} />
           <Route path="/delivery-returns" element={<DeliveryReturns />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/filter-data" element={<FilterData />} />
           <Route path="/product/:id" element={<Details />} />
           <Route path="/blog" element={<Blog />} />

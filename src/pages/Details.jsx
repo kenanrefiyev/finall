@@ -12,6 +12,11 @@ const Details = () => {
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
+    const currency = useSelector((state) => state.currency.currentCurrency); // Mövcud valyuta
+      const conversionRate = useSelector((state) => state.currency.conversionRates[currency]); // Mövcud valyutanın məzənnəsi
+      const convertPrice = (price) => {
+        return (price * conversionRate.rate).toFixed(2);
+      };
 
     useEffect(() => {
         if (products.length > 0) {
@@ -73,7 +78,7 @@ const Details = () => {
                     <h2 className='text-3xl font-bold text-gray-900 mb-2'>{product.name}</h2>
                     
                     <div className='flex items-center mb-6'>
-                        <span className='text-2xl font-semibold text-blue-600'>${product.price.toFixed(2)}</span>
+                        <span className='text-2xl font-semibold text-blue-600'>{conversionRate.symbol} {convertPrice(product.price)}</span>
                         {product.originalPrice && (
                             <span className='ml-2 text-lg text-gray-500 line-through'>${product.originalPrice.toFixed(2)}</span>
                         )}

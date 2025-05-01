@@ -1,6 +1,6 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
 const Order = ({ order }) => {
     const navigate = useNavigate()
     
@@ -13,7 +13,11 @@ const Order = ({ order }) => {
             }
         })
     }
-    
+    const currency = useSelector((state) => state.currency.currentCurrency); // Mövcud valyuta
+  const conversionRate = useSelector((state) => state.currency.conversionRates[currency]); // Mövcud valyutanın məzənnəsi
+  const convertPrice = (price) => {
+    return (price * conversionRate.rate).toFixed(2);
+  };
     return (
         <div className='container mx-auto py-8 px-4 sm:px-6 lg:px-8 max-w-4xl'>
             <div className='text-center mb-8'>
@@ -52,7 +56,10 @@ const Order = ({ order }) => {
                                         <p className='font-medium text-gray-800'>{product.name}</p>
                                         <p className='text-sm text-gray-500'>Qty: {product.quantity}</p>
                                     </div>
-                                    <p className='font-medium text-gray-800'>${(product.price * product.quantity).toFixed(2)}</p>
+                                    <p className='font-medium text-gray-800'>
+                                    {conversionRate.symbol}{' '}
+                                    {convertPrice(product.price * product.quantity)}
+                                    </p>
                                 </div>
                             ))}
                         </div>
@@ -62,7 +69,7 @@ const Order = ({ order }) => {
                 <div className='p-6 border-t border-gray-200 bg-gray-50'>
                     <div className='flex justify-between items-center'>
                         <span className='text-lg font-medium text-gray-700'>Total Price:</span>
-                        <span className='text-xl font-bold text-gray-900'>${order.totalPrice.toFixed(2)}</span>
+                        <span className='text-xl font-bold text-gray-900'> {conversionRate.symbol} {convertPrice(order.totalPrice)}</span>
                     </div>
                 </div>
             </div>

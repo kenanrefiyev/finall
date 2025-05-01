@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { Categories, mockData } from '../assets/Data'
 import InfoSection from '../components/InfoSection'
 import CategorySection from '../components/CategorySection'
 import { setProducts } from '../redux/productSlice'
@@ -8,6 +7,8 @@ import ProductCard from '../components/ProductCard'
 import Shop from '../pages/Shop'
 
 import SubscriptionSection from '../components/Subscription'
+import { mockData } from '../assets/Data'
+
 
 const Home = () => {
   const dispatch = useDispatch()

@@ -1,22 +1,46 @@
 // const express = require('express');
+// const nodemailer = require('nodemailer');
+// const bodyParser = require('body-parser');
 // const cors = require('cors');
 
 // const app = express();
-// app.use(express.json());
+// // const PORT = 5;
+
+// // Middleware
 // app.use(cors());
+// app.use(bodyParser.json());
 
-// // Subscribe API
-// app.post('/api/subscribe', (req, res) => {
-//   const { email } = req.body;
-
-//   if (!email || !/\S+@\S+\.\S+/.test(email)) {
-//     return res.status(400).json({ error: 'Invalid email format' });
-//   }
-
-//   console.log('New subscriber:', email);
-//   res.status(200).json({ message: 'Subscription successful!' });
+// // Nodemailer Transporter
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: 'kenanguitar666@gmail.com', // Gmail hesabınız
+//     pass: 'youknowthecode', // Gmail hesabınızın şifrəsi (və ya App Password)
+//   },
 // });
 
-// // Serveri işə sal
-// const PORT = 5000;
-// app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+// // API Endpoint for Sending Emails
+// app.post('/api/subscribe', (req, res) => {
+//   const { email, category } = req.body;
+
+//   const mailOptions = {
+//     from: 'your-email@gmail.com',
+//     to: 'kenanguitar666@gmail.com', // Mesajın göndəriləcəyi e-poçt
+//     subject: 'New Subscription',
+//     text: `You have a new subscription from ${email} for the category: ${category}.`,
+//   };
+
+//   transporter.sendMail(mailOptions, (error, info) => {
+//     if (error) {
+//       console.error('Error sending email:', error);
+//       return res.status(500).json({ message: 'Failed to send email' });
+//     }
+//     res.status(200).json({ message: 'Email sent successfully!' });
+//   });
+// });
+
+// // Start Server
+// app.listen(PORT, () => {
+//   console.log(`Server is running on http://localhost:${PORT}`);
+// });
